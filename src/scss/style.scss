@@ -1,0 +1,463 @@
+@import "variables";
+@import "popup";
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 20px 40px;
+}
+
+hr.divider {
+  width: 80%;
+  margin: 5px auto;
+  border: 1px solid $gray-100-color;
+}
+
+hr.section-divider {
+  width: 50%;
+  margin: 50px auto;
+  border: 1px solid $black-color;
+}
+
+.main-container {
+  background-color: $gray-200-color;
+  border-top: 1px solid $gray-300-color;
+  padding: 0 10%;
+}
+
+.container {
+  padding: 40px 80px;
+  background-color: $white-color;
+}
+
+header {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.logo-image {
+  width: 300px;
+  height: auto;
+  background-image: url('../images/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: background-image 0.3s ease-in;
+
+  &:hover {
+    background-image: url('../images/logo_hover.png');
+  }
+}
+
+.search-panel {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: 1px solid $primary-color;
+  background: transparent;
+  color: $primary-color;
+  cursor: pointer;
+  font-size: 1em;
+  transition: 0.3s ease-in;
+}
+
+.btn:hover {
+  background-color: $primary-color;
+  color: $white-color;
+
+}
+
+.btn-big {
+  font-size: 1.2em;
+}
+
+.form-item {
+  padding: 13px 8px;
+  border: 1px solid $gray-500-color;
+  border-radius: 0;
+  color: $gray-500-color;
+  font-size: 1em;
+
+  &:focus {
+    border: 1px solid $gray-500-color;
+    border-radius: 0;
+  }
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0;
+  margin-top: 20px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav li {
+  padding-right: 1.2em;
+}
+
+nav a {
+  font-size: 1.2em;
+  text-decoration: none;
+  color: $primary-color;
+  transition: 0.3s ease-in;
+
+  &:hover {
+    color: $primary-500-color;
+  }
+}
+
+.filter-panel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 30px 0;
+
+  .vertical-divider {
+    display: flex;
+    border-right: 3px dotted $black-color;
+    width: 4px;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    color: $gray-500-color;
+    max-width: 150px;
+
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+
+    select {
+      margin-left: 15px;
+      padding: 5px;
+      border: 1px solid $gray-500-color;
+      background-color: $white-color;
+      border-radius: 0;
+      color: $gray-500-color;
+      font-size: 1em;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+    }
+  }
+}
+
+
+.teachers-container {
+  padding-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.teacher-card {
+  flex: 1 1 calc(20% - 20px);
+  max-width: 150px;
+  box-sizing: border-box;
+  margin-bottom: 30px;
+  position: relative;
+
+  .profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid $primary-100-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    background-color: $white-color;
+    color: $primary-color;
+    transition: 0.3s ease-in;
+
+    &:hover {
+      border-color: $primary-500-color;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.3s ease-in;
+
+      &:hover {
+        transform: scale(1.2);
+        z-index: 1;
+      }
+    }
+
+    &.initials {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $white-color;
+      color: $primary-color;
+      font-size: 24px;
+      font-weight: bold;
+
+      &:hover {
+        color: $primary-500-color;
+      }
+    }
+  }
+
+  .teacher-info {
+    margin-top: 15px;
+
+    h2 {
+      font-size: 1.5em;
+      color: #333;
+      margin: 15px 0;
+    }
+
+    .specialization {
+      font-size: 1.1em;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .country {
+      font-size: 0.9em;
+      color: $black-color;
+    }
+  }
+
+  .profile-starred:before {
+    content: '★';
+    position: absolute;
+    top: 0;
+    right: 5px;
+    color: $yellow-color;
+    font-size: 1.5em;
+    font-weight: bold;
+    z-index: 3;
+  }
+}
+
+.pagination-panel {
+  display: flex;
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.page-link, .dots {
+  margin: 0 5px;
+  padding: 8px 5px;
+  text-decoration: none;
+  color: $blue-400-color;
+  cursor: pointer;
+
+  &:hover {
+    color: $blue-500-color;
+  }
+}
+
+
+.page-link.active, .dots {
+  color: $gray-500-color;
+  cursor: default;
+}
+
+
+.statistics-table {
+  padding: 0 10px 0 30px;
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 12px 15px;
+    text-align: center;
+
+    &:first-child {
+      text-align: left;
+    }
+  }
+
+  th {
+    position: relative;
+    font-size: 1.2em;
+    border-bottom: 1px solid $black-color;
+    transition: 0.3s ease-in;
+
+    &:first-child {
+      padding-left: 25px;
+    }
+
+    &:hover {
+      background-color: $gray-100-color;
+      border-bottom: 5px solid $black-color;
+
+      &:after {
+        position: absolute;
+        content: "↓";
+        font-size: 1.3em;
+        color: $blue-400-color;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  td {
+    font-size: 1em;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: $pink-100-color;
+  }
+}
+
+.favorites-section {
+  position: relative;
+
+  .arrow-left {
+    top: calc(50% - 25px);
+    left: -35px;
+  }
+
+  .arrow-right {
+    top: calc(50% - 25px);
+    right: -35px;
+  }
+
+  .icon-container {
+    position: absolute;
+    display: inline-block;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    svg {
+      width: 50px;
+      height: 50px;
+
+      & path {
+        fill: $gray-500-color;
+        transition: 0.3s ease-in;
+      }
+    }
+
+    &:hover > svg > path {
+      fill: $black-color;
+    }
+  }
+
+
+  .carousel {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+
+    .carousel-track {
+      display: flex;
+      flex: 1 1 calc(20% - 20px);
+      justify-content: space-around;
+      flex-wrap: nowrap;
+    }
+
+    .icon-container {
+      position: absolute;
+      display: inline-block;
+      cursor: pointer;
+      background-size: contain;
+      background-repeat: no-repeat;
+
+    }
+  }
+}
+
+
+.about-section {
+  p {
+    color: $gray-500-color;
+    font-size: 1.2em;
+    text-align: left;
+    margin-bottom: 15px;
+  }
+}
+
+footer nav {
+  padding-bottom: 0;
+}
+
+@media (min-width: 769px) {
+  .search-input {
+    &:hover, &:focus, &:active {
+      width: 400px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .main-container {
+    padding: 0 5%;
+  }
+
+  .container {
+    padding: 20px 40px;
+  }
+
+  .search-panel {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logo-image {
+    width: 200px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .teachers-container {
+    justify-content: center;
+  }
+
+  .teacher-card {
+    flex: 1 1 calc(30% - 20px);
+  }
+
+  .pagination-panel {
+    justify-content: center;
+  }
+
+  .statistics-table {
+    padding: 0 10px;
+  }
+
+  .carousel {
+    overflow: hidden;
+
+    .carousel-track {
+      flex: 1 1 100%;
+    }
+  }
+
+  .icon-container {
+    display: none;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.bold-text {
+  font-weight: bold;
+}

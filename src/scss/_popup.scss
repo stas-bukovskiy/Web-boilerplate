@@ -1,0 +1,244 @@
+@import "variables";
+
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(7px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup {
+  background: white;
+  width: 560px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 80vh;
+}
+
+.wide-popup {
+  width: 960px;
+}
+
+.popup-header {
+  background: $gray-600-color;
+  border: 1px solid $gray-500-color;
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    color: $white-color;
+    font-size: 1.5rem;
+    margin: 3px;
+  }
+}
+
+.close-btn {
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.popup-body {
+  padding: 30px 40px 20px 40px;
+  max-height: calc(80vh - 80px);
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+  color: $gray-500-color;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 8px;
+  font-size: 1em;
+  border: 1px solid $gray-500-color;
+  border-radius: 1px;
+  color: $gray-500-color;
+  background-color: $white-color;
+
+  &:focus {
+    border: 1px solid $gray-500-color;
+    border-radius: 0;
+  }
+}
+
+.form-group input[type="color"] {
+  width: 50px;
+  height: 25px;
+  background-color: $gray-300-color;
+  padding: 6px 4px;
+}
+
+.color-picker-logo {
+  width: 15px;
+  height: 15px;
+}
+
+.radio-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 3px;
+  margin-right: 15px;
+
+  label {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+  }
+}
+
+.radio-group input {
+  margin-right: 5px;
+}
+
+#add-teacher-popup {
+  display: none;
+}
+
+.add-btn {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.add-btn:hover {
+  background-color: #e63946;
+}
+
+textarea {
+  height: 80px;
+  resize: none;
+}
+
+#teacher-info-popup {
+  display: none;
+}
+
+.teacher-info-popup-body {
+  width: 100%;
+  padding: 20px;
+}
+
+.teacher-from-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) );
+  grid-gap: 20px;
+  margin-bottom: 15px;
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  .form-group:nth-last-child(1), .form-group:nth-last-child(2),
+  .form-group:nth-last-child(3) {
+    grid-column: 1;
+  }
+}
+
+.teacher-photo {
+  float: left;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  margin-right: 30px;
+}
+
+.teacher-info {
+  float: left;
+  width: calc(100% - 330px);
+  text-align: left;
+
+  h3 {
+    margin-top: 0;
+    font-size: 1.8rem;
+  }
+
+  a {
+    color: $blue-400-color;
+    transition: color 0.3s ease-in;
+    text-decoration: none;
+    padding-bottom: 20px;
+
+    &:hover {
+      color: $blue-500-color;
+    }
+  }
+}
+
+.teacher-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+
+  svg {
+    font-size: 2rem;
+    cursor: pointer;
+    fill: $yellow-color;
+  }
+}
+
+.teacher-specialization {
+  font-size: 1.1rem;
+  color: $gray-600-color;
+  padding-bottom: 15px;
+}
+
+.teacher-info-text {
+  font-size: 0.9rem;
+  color: $gray-500-color;
+  padding-bottom: 10px;
+}
+
+.popup-footer {
+  clear: both;
+  padding-top: 20px;
+  text-align: left;
+
+  p {
+    padding-bottom: 15px;
+  }
+}
+
+.toggle-map {
+  color: $blue-400-color;
+  transition: color 0.3s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    color: $blue-500-color;
+  }
+}
