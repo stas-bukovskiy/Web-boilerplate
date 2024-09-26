@@ -31,7 +31,7 @@ const CONFIG = {
     new HtmlReplaceWebpackPlugin([
       {
         pattern:
-          '<script type="text/javascript" src="../build/app.js"></script>',
+          '<script type="text/javascript" src="../build/app.ts"></script>',
         replacement: "",
       },
       {
@@ -119,7 +119,7 @@ const CONFIG = {
 
 if (!devMode) {
   CONFIG.output.publicPath = "./";
-  CONFIG.output.filename = "js/app.js";
+  CONFIG.output.filename = "js/app.ts";
   CONFIG.plugins.push(new MinifyPlugin());
   CONFIG.module.rules.push({
     test: [/\.js$/],
