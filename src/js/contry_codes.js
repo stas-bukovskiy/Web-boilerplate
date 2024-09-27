@@ -1,10 +1,4 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.validatePhoneByCountry = validatePhoneByCountry;
-const libphonenumber_js_1 = __importDefault(require("libphonenumber-js"));
+import parsePhoneNumberFromString from "libphonenumber-js";
 const countryNameToCodeMap = {
     "Ascension Island": "AC",
     "Andorra": "AD",
@@ -252,7 +246,7 @@ const countryNameToCodeMap = {
     "Zambia": "ZM",
     "Zimbabwe": "ZW"
 };
-function validatePhoneByCountry(phone, country) {
+export function validatePhoneByCountry(phone, country) {
     if (!phone || !country) {
         return false;
     }
@@ -260,7 +254,7 @@ function validatePhoneByCountry(phone, country) {
     if (!countryCode) {
         return false;
     }
-    const phoneNumber = (0, libphonenumber_js_1.default)(phone, countryCode);
+    const phoneNumber = parsePhoneNumberFromString(phone, countryCode);
     return (phoneNumber === null || phoneNumber === void 0 ? void 0 : phoneNumber.isValid()) || false;
 }
 // console.log(validatePhoneByCountry("+1 650-253-0000", "United States")); // true

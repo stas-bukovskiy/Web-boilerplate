@@ -220,6 +220,7 @@ nav a {
 
   .teacher-info {
     margin-top: 15px;
+    text-align: center;
 
     h2 {
       font-size: 1.5em;
@@ -466,4 +467,11 @@ footer nav {
 
 .bold-text {
   font-weight: bold;
+}
+
+.error-message {
+  color: $primary-color;
+  font-size: 0.9em;
+  display: none;
+  margin-top: 5px;
 }

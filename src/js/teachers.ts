@@ -11,10 +11,10 @@ type Timezone = {
     description: string
 }
 
-const Courses = ["Mathematics", "Physics", "English", "Computer Science", "Dancing", "Chess", "Biology", "Chemistry",
+export const Courses = ["Mathematics", "Physics", "English", "Computer Science", "Dancing", "Chess", "Biology", "Chemistry",
     "Law", "Art", "Medicine", "Statistics"]
 
-type Teacher = {
+export type Teacher = {
     id: string,
     favorite: boolean,
     course: string,
@@ -105,14 +105,14 @@ function toTitleCase(s: string): string {
 }
 
 
-console.log("Task 1: Normalize teachers");
-let normalizedTeachers = normalizeTeachers(randomUserMock, additionalUsers);
-console.log(normalizedTeachers);
+// console.log("Task 1: Normalize teachers");
+export let normalizedTeachers = normalizeTeachers(randomUserMock, additionalUsers);
+// console.log(normalizedTeachers);
 
 
 // Task 2: Validate teachers
 
-function validateTeacher(teacher: Teacher): { field: string, error: string } {
+export function validateTeacher(teacher: Teacher): { field: string, error: string } {
     const keysShouldStartWIthCapital: (keyof Teacher)[] = ['full_name', 'gender', 'notes', 'state', 'city', 'country'];
     for (const key of keysShouldStartWIthCapital) {
         const value: any = teacher[key];
@@ -150,25 +150,28 @@ function validateEmail(email?: string): boolean {
     return emailRegex.test(email);
 }
 
-console.log("\n\nTask 2: Validate teachers");
-console.log(normalizedTeachers[0], validateTeacher(normalizedTeachers[0])); // false
-console.log(normalizedTeachers[1], validateTeacher(normalizedTeachers[1])); // true
-console.log(normalizedTeachers[2], validateTeacher(normalizedTeachers[2])); // true
-console.log(normalizedTeachers[3], validateTeacher(normalizedTeachers[3])); // true
+// console.log("\n\nTask 2: Validate teachers");
+// console.log(normalizedTeachers[0], validateTeacher(normalizedTeachers[0])); // false
+// console.log(normalizedTeachers[1], validateTeacher(normalizedTeachers[1])); // true
+// console.log(normalizedTeachers[2], validateTeacher(normalizedTeachers[2])); // true
+// console.log(normalizedTeachers[3], validateTeacher(normalizedTeachers[3])); // true
 
 
 // Task 3: Filter teachers
-type FilterParams = {
-    field: 'course' | 'age' | 'gender' | 'favorite',
+export type FilterParams = {
+    field: 'course' | 'age' | 'gender' | 'favorite' | 'country' | 'picture_large' | 'picture_thumbnail',
     condition: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte',
-    value: string | number | boolean
+    value: string | number | boolean | undefined
 }
 
-function filterTeachers(teachers: Teacher[], ...filterParams: FilterParams[]): Teacher[] {
+export function filterTeachers(teachers: Teacher[], ...filterParams: FilterParams[]): Teacher[] {
     return teachers.filter(teacher => filterParams.every(filterParam => {
         const value = teacher[filterParam.field];
-        if (value === undefined || value === null) {
-            return false;
+        if (value === undefined && filterParam.value === undefined) {
+            return filterParam.condition === 'eq';
+        }
+        if (value === undefined || filterParam.value === undefined) {
+            return filterParam.condition === 'ne';
         }
 
         switch (filterParam.condition) {
@@ -190,27 +193,27 @@ function filterTeachers(teachers: Teacher[], ...filterParams: FilterParams[]): T
     }));
 }
 
-console.log("\n\nTask 3: Filter teachers");
-const teacherOver30 = filterTeachers(normalizedTeachers, {field: 'age', condition: 'gt', value: 30});
-console.log("Teachers with age > 30", teacherOver30.slice(0, 3), teacherOver30.length);
-const teacherWithCourseMathematics = filterTeachers(normalizedTeachers, {
-    field: 'course',
-    condition: 'eq',
-    value: 'Mathematics'
-});
-console.log("Teachers with course Mathematics", teacherWithCourseMathematics.slice(0, 3), teacherWithCourseMathematics.length);
-const teacherWithFavorite = filterTeachers(normalizedTeachers, {field: 'favorite', condition: 'eq', value: true});
-console.log("Teachers favorite", teacherWithFavorite.slice(0, 3), teacherWithFavorite.length);
+// console.log("\n\nTask 3: Filter teachers");
+// const teacherOver30 = filterTeachers(normalizedTeachers, {field: 'age', condition: 'gt', value: 30});
+// console.log("Teachers with age > 30", teacherOver30.slice(0, 3), teacherOver30.length);
+// const teacherWithCourseMathematics = filterTeachers(normalizedTeachers, {
+//     field: 'course',
+//     condition: 'eq',
+//     value: 'Mathematics'
+// });
+// console.log("Teachers with course Mathematics", teacherWithCourseMathematics.slice(0, 3), teacherWithCourseMathematics.length);
+// const teacherWithFavorite = filterTeachers(normalizedTeachers, {field: 'favorite', condition: 'eq', value: true});
+// console.log("Teachers favorite", teacherWithFavorite.slice(0, 3), teacherWithFavorite.length);
 
 
 // Task 4: Sort teachers
-type SortParams = {
-    field: 'full_name' | 'age' | 'b_date' | 'country'
+export type SortParams = {
+    field: 'full_name' | 'course' | 'age' | 'gender'|'country';
     order: 'asc' | 'desc'
 }
 
-function sortTeachers(teachers: Teacher[], ...sortParams: SortParams[]): Teacher[] {
-    return teachers.sort((a, b) => {
+export function sortTeachers(teachers: Teacher[], ...sortParams: SortParams[]): Teacher[] {
+    return teachers.map((x) => x).sort((a, b) => {
         for (const sortParam of sortParams) {
             const aValue = a[sortParam.field];
             const bValue = b[sortParam.field];
@@ -234,19 +237,19 @@ function sortTeachers(teachers: Teacher[], ...sortParams: SortParams[]): Teacher
     });
 }
 
-console.log("\n\nTask 4: Sort teachers");
-const sortedTeachers = sortTeachers(normalizedTeachers, {field: 'age', order: 'asc'});
-console.log("Sorted by age", sortedTeachers.map(t => {
-    return {name: t.full_name, age: t.age}
-}).slice(0, 10));
-const sortedTeachers2 = sortTeachers(normalizedTeachers, {field: 'full_name', order: 'desc'});
-console.log("Sorted by name", sortedTeachers2.map(t => {
-    return {name: t.full_name, age: t.age}
-}).slice(0, 10));
-const sortedTeachers3 = sortTeachers(normalizedTeachers, {field: 'b_date', order: 'asc'}, {field: 'age', order: 'asc'});
-console.log("Sorted by b_date or age", sortedTeachers3.map(t => {
-    return {name: t.full_name, age: t.age, course: t.course}
-}).slice(0, 10));
+// console.log("\n\nTask 4: Sort teachers");
+// const sortedTeachers = sortTeachers(normalizedTeachers, {field: 'age', order: 'asc'});
+// console.log("Sorted by age", sortedTeachers.map(t => {
+//     return {name: t.full_name, age: t.age}
+// }).slice(0, 10));
+// const sortedTeachers2 = sortTeachers(normalizedTeachers, {field: 'full_name', order: 'desc'});
+// console.log("Sorted by name", sortedTeachers2.map(t => {
+//     return {name: t.full_name, age: t.age}
+// }).slice(0, 10));
+// const sortedTeachers3 = sortTeachers(normalizedTeachers, {field: 'b_date', order: 'asc'}, {field: 'age', order: 'asc'});
+// console.log("Sorted by b_date or age", sortedTeachers3.map(t => {
+//     return {name: t.full_name, age: t.age, course: t.course}
+// }).slice(0, 10));
 
 
 // Task 5: Search teachers
@@ -261,15 +264,15 @@ function searchTeachers(teachers: Teacher[], search: string | number): Teacher[]
     });
 }
 
-console.log("\n\nTask 5: Search teachers");
-let searchResult = searchTeachers(normalizedTeachers, 'Norbert');
-console.log("Search by name", searchResult.map(t => {
-    return {name: t.full_name, age: t.age}
-}).slice(0, 10));
-searchResult = searchTeachers(normalizedTeachers, 30);
-console.log("Search by age", searchResult.map(t => {
-    return {name: t.full_name, age: t.age}
-}).slice(0, 10));
+// console.log("\n\nTask 5: Search teachers");
+// let searchResult = searchTeachers(normalizedTeachers, 'Norbert');
+// console.log("Search by name", searchResult.map(t => {
+//     return {name: t.full_name, age: t.age}
+// }).slice(0, 10));
+// searchResult = searchTeachers(normalizedTeachers, 30);
+// console.log("Search by age", searchResult.map(t => {
+//     return {name: t.full_name, age: t.age}
+// }).slice(0, 10));
 
 
 // Task 6: Percentaged filter
@@ -282,9 +285,9 @@ function percentageFilter(teachers: Teacher[], ...filterParams: FilterParams[]):
     return {teachers: filtered, percent: Math.round(percent * 100) / 100};
 }
 
-console.log("\n\nTask 6: Percentaged filter");
-let {teachers, percent} = percentageFilter(normalizedTeachers, {field: 'favorite', condition: 'eq', value: true});
-console.log("Favorite teachers", teachers.map(t => t.full_name).slice(0, 3), percent);
-({teachers, percent} = percentageFilter(normalizedTeachers, {field: 'age', condition: 'gt', value: 30}));
-console.log("Teachers over 30", teachers.map(t => t.full_name).slice(0, 3), percent);
-({teachers, percent} = percentageFilter(normalizedTeachers, {field: 'course', condition: 'eq', value: 'Mathematics'}));
+// console.log("\n\nTask 6: Percentaged filter");
+// let {teachers, percent} = percentageFilter(normalizedTeachers, {field: 'favorite', condition: 'eq', value: true});
+// console.log("Favorite teachers", teachers.map(t => t.full_name).slice(0, 3), percent);
+// ({teachers, percent} = percentageFilter(normalizedTeachers, {field: 'age', condition: 'gt', value: 30}));
+// console.log("Teachers over 30", teachers.map(t => t.full_name).slice(0, 3), percent);
+// ({teachers, percent} = percentageFilter(normalizedTeachers, {field: 'course', condition: 'eq', value: 'Mathematics'}));
