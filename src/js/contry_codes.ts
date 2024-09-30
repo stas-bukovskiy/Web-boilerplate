@@ -1,4 +1,5 @@
-import parsePhoneNumberFromString, {CountryCode} from "libphonenumber-js";
+// @ts-ignore
+import parsePhoneNumberFromString, {CountryCode} from 'libphonenumber-js';
 
 const countryNameToCodeMap: { [key: string]: CountryCode } = {
     "Ascension Island": "AC",

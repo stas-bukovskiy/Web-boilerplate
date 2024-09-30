@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const FE4U_Lab2_mock_1 = require("./FE4U-Lab2-mock");
-const contry_codes_1 = require("./contry_codes");
+import { additionalUsers, randomUserMock } from "./FE4U-Lab2-mock";
+import { validatePhoneByCountry } from "./contry_codes";
 const Courses = ["Mathematics", "Physics", "English", "Computer Science", "Dancing", "Chess", "Biology", "Chemistry",
     "Law", "Art", "Medicine", "Statistics"];
 // Task 1: Normalize teachers
@@ -65,19 +63,31 @@ function toTitleCase(s) {
     return s.length === 0 ? '' : s[0].toUpperCase() + s.slice(1);
 }
 console.log("Task 1: Normalize teachers");
-let normalizedTeachers = normalizeTeachers(FE4U_Lab2_mock_1.randomUserMock, FE4U_Lab2_mock_1.additionalUsers);
+export let normalizedTeachers = normalizeTeachers(randomUserMock, additionalUsers);
 console.log(normalizedTeachers);
 // Task 2: Validate teachers
 function validateTeacher(teacher) {
-    return startWithCapitalLetter(teacher.full_name)
-        && startWithCapitalLetter(teacher.gender)
-        && startWithCapitalLetter(teacher.notes)
-        && startWithCapitalLetter(teacher.state)
-        && startWithCapitalLetter(teacher.city)
-        && startWithCapitalLetter(teacher.country)
-        && teacher.age !== undefined
-        && (0, contry_codes_1.validatePhoneByCountry)(teacher.phone, teacher.country)
-        && validateEmail(teacher.email);
+    const keysShouldStartWIthCapital = ['full_name', 'gender', 'notes', 'state', 'city', 'country'];
+    for (const key of keysShouldStartWIthCapital) {
+        const value = teacher[key];
+        if (typeof value !== 'string' && value !== undefined) {
+            throw new Error(`Value of ${key} should be a string`);
+        }
+        if (!startWithCapitalLetter(value)) {
+            const prettyKey = key.split('_').map(toTitleCase).join(' ');
+            return { field: key, error: `${prettyKey} should start with a capital letter` };
+        }
+    }
+    if (teacher.age === undefined) {
+        return { field: 'age', error: 'Age is required' };
+    }
+    if (!validatePhoneByCountry(teacher.phone, teacher.country)) {
+        return { field: 'phone', error: 'Phone is not valid' };
+    }
+    if (!validateEmail(teacher.email)) {
+        return { field: 'email', error: 'Email is not valid' };
+    }
+    return { field: '', error: '' };
 }
 function startWithCapitalLetter(s) {
     return s === undefined || s.length === 0 ? true : s[0] === s[0].toUpperCase();
