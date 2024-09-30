@@ -25,9 +25,10 @@
             </a>
             <div class="search-panel">
                 <label>
-                    <input class='form-item search-input' type="text" placeholder="Name, note or age search">
+                    <input class='form-item search-input' id="search-input" type="text"
+                           placeholder="Name, note or age search">
                 </label>
-                <button class="btn">Search</button>
+                <button class="btn" id="search-button">Search</button>
             </div>
         </header>
         <nav>
@@ -47,7 +48,7 @@
             <div class="filter-panel">
                 <label>
                     <span>Age</span>
-                    <select class='form-item'>
+                    <select id="age-filter" class='form-item'>
                         <option value="0">All</option>
                         <option value="2">18-31</option>
                         <option value="3">31-40</option>
@@ -58,123 +59,32 @@
                 <div class="vertical-divider"></div>
                 <label>
                     <span>Region</span>
-                    <select class='form-item'>
+                    <select id="region-filter" class='form-item'>
                         <option value="0">All</option>
-                        <option value="1">Europe</option>
-                        <option value="2">Asia</option>
-                        <option value="3">America</option>
-                        <option value="4">Africa</option>
                     </select>
                 </label>
                 <div class="vertical-divider"></div>
                 <label>
                     <span>Sex</span>
-                    <select class='form-item'>
+                    <select id="gender-filter" class='form-item'>
                         <option value="0">All</option>
                         <option value="1">Male</option>
-                        <option value="1">Female</option>
+                        <option value="2">Female</option>
                     </select>
                 </label>
                 <div class="vertical-divider"></div>
                 <label>
-                    <input type="checkbox">
+                    <input type="checkbox" id="photo-filter">
                     <span>Only with photo</span>
                 </label>
                 <div class="vertical-divider"></div>
                 <label>
-                    <input type="checkbox">
+                    <input type="checkbox" id="favorite-filter">
                     <span>Only favorites</span>
                 </label>
             </div>
 
             <div class="teachers-container">
-                <div class="teacher-card">
-                    <div class="profile-photo">
-                        <img src="./images/ihor_tkachuk.jpg" alt="Ihor Tkachuk"/>
-                    </div>
-                    <div class="teacher-info">
-                        <h2>Ihor<br/>Tkachuk</h2>
-                        <p class="specialization">Chemistry</p>
-                        <p class="country">Ukraine</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card">
-                    <div class="profile-photo">
-                        <img src="./images/pragg_rameshbabu.jpg" alt="Pragg Rameshbabu"/>
-                    </div>
-                    <div class="teacher-info">
-                        <h2>Pragg<br/>Rameshbabu</h2>
-                        <p class="specialization">Chess</p>
-                        <p class="country">India</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card">
-                    <div class="profile-photo profile-starred">
-                        <img src="./images/floor_jansen.jpg" alt="Floor Jansen"/>
-                    </div>
-                    <div class="teacher-info">
-                        <h2>Floor<br/>Jansen</h2>
-                        <p class="specialization">Vocal</p>
-                        <p class="country">Denmark</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card">
-                    <div class="profile-photo">
-                        <img src="./images/john_burke.jpg" alt="John Burke"/>
-                    </div>
-                    <div class="teacher-info">
-                        <h2>John<br/>Burke</h2>
-                        <p class="specialization">Computer Science</p>
-                        <p class="country">Belgium</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card">
-                    <div class="profile-photo profile-starred">
-                        <img src="./images/ani_tang.jpg" alt="Ari Tang"/>
-                    </div>
-                    <div class="teacher-info">
-                        <h2>Ari<br/>Tang</h2>
-                        <p class="specialization">Biology</p>
-                        <p class="country">China</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card">
-                    <div class="profile-photo">
-                        <img src="./images/rachel_andrew.jpg" alt="Rachel Andrew"/>
-                    </div>
-                    <div class="teacher-info">
-                        <h2>Rachel<br/>Andrew</h2>
-                        <p class="specialization">Medicine</p>
-                        <p class="country">UK</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card">
-                    <div class="profile-photo initials">
-                        <span>A.M</span>
-                    </div>
-                    <div class="teacher-info">
-                        <h2>Anna<br/>Muzychuk</h2>
-                        <p class="specialization">Chess</p>
-                        <p class="country">Belarus</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card">
-                    <div class="profile-photo initials">
-                        <span>R.L</span>
-                    </div>
-                    <div class="teacher-info">
-                        <h2>Radoslaw<br/>Ljubojevic</h2>
-                        <p class="specialization">Physics</p>
-                        <p class="country">Poland</p>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -184,97 +94,26 @@
         <section>
             <h1>Statistics</h1>
             <div class="table-wrapper">
-                <table class="statistics-table">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Speciality</th>
-                        <th>Age</th>
-                        <th>Gender</th>
-                        <th>Nationality</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Daisy Alexander</td>
-                        <td>Chemistry</td>
-                        <td>28</td>
-                        <td>Female</td>
-                        <td>Vietnam</td>
-                    </tr>
-                    <tr>
-                        <td>Julia Bradley</td>
-                        <td>Math</td>
-                        <td>26</td>
-                        <td>Female</td>
-                        <td>USA</td>
-                    </tr>
-                    <tr>
-                        <td>Rita Hart</td>
-                        <td>Art</td>
-                        <td>41</td>
-                        <td>Female</td>
-                        <td>Ireland</td>
-                    </tr>
-                    <tr>
-                        <td>Jonathan Jacobs</td>
-                        <td>Math</td>
-                        <td>32</td>
-                        <td>Male</td>
-                        <td>England</td>
-                    </tr>
-                    <tr>
-                        <td>Nathaniel White</td>
-                        <td>Computer Science</td>
-                        <td>37</td>
-                        <td>Male</td>
-                        <td>Austria</td>
-                    </tr>
-                    <tr>
-                        <td>Frank Medina</td>
-                        <td>English</td>
-                        <td>43</td>
-                        <td>Male</td>
-                        <td>Italy</td>
-                    </tr>
-                    <tr>
-                        <td>Ella Curtis</td>
-                        <td>Chess</td>
-                        <td>34</td>
-                        <td>Female</td>
-                        <td>USA</td>
-                    </tr>
-                    <tr>
-                        <td>Claire Simmmonns</td>
-                        <td>Art</td>
-                        <td>38</td>
-                        <td>Female</td>
-                        <td>Netherlands</td>
-                    </tr>
-                    <tr>
-                        <td>Benjamin Knight</td>
-                        <td>Biology</td>
-                        <td>44</td>
-                        <td>Male</td>
-                        <td>Scotland</td>
-                    </tr>
-                    <tr>
-                        <td>Norma Rose</td>
-                        <td>Statistics</td>
-                        <td>36</td>
-                        <td>Female</td>
-                        <td>France</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div>
+                    <table class="statistics-table">
+                        <thead>
+                        <tr>
+                            <th data-field="full_name">Name</th>
+                            <th data-field="course">Speciality</th>
+                            <th data-field="age">Age</th>
+                            <th data-field="gender">Gender</th>
+                            <th data-field="country">Nationality</th>
+                        </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        <!-- ... -->
+                        </tbody>
+                    </table>
+                </div>
 
-            <div class="pagination-panel">
-                <a href="#" class="page-link active">1</a>
-                <a href="#" class="page-link">2</a>
-                <a href="#" class="page-link">3</a>
-                <span class="dots">...</span>
-                <a href="#" class="page-link">Last</a>
+                <div class="pagination-panel" id="pagination-panel">
+                    <!-- ... -->
+                </div>
             </div>
         </section>
 
@@ -397,17 +236,17 @@
         <div class="popup-body">
             <form action="#" class="teacher-form">
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="Enter name" required>
+                    <label for="full_name">Name</label>
+                    <input type="text" id="full_name" placeholder="Enter name" required>
+                    <div class="error-message" id="full_name-error"></div>
                 </div>
 
                 <div class="form-group">
-                    <label for="specialty">Specialty</label>
-                    <select id="specialty">
-                        <option>Mathematics</option>
-                        <option>Science</option>
-                        <option>English</option>
+                    <label for="course">Specialty</label>
+                    <select id="course">
+
                     </select>
+                    <div class="error-message" id="specialty-course"></div>
                 </div>
 
                 <div class="teacher-from-grid">
@@ -417,27 +256,39 @@
                             <option>Ukraine</option>
                             <option>USA</option>
                             <option>Canada</option>
+                            <option>UK</option>
+                            <option>Germany</option>
+                            <option>France</option>
+                            <option>Italy</option>
+                            <option>Spain</option>
+                            <option>China</option>
+                            <option>Japan</option>
                         </select>
+                        <div class="error-message" id="country-error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="city">City</label>
                         <input type="text" id="city">
+                        <div class="error-message" id="city-error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" required>
+                        <div class="error-message" id="email-error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="phone">Phone</label>
                         <input type="tel" id="phone">
+                        <div class="error-message" id="phone-error"></div>
                     </div>
 
                     <div class="form-group">
-                        <label for="dob">Date of Birth</label>
-                        <input type="date" id="dob">
+                        <label for="b_date">Date of Birth</label>
+                        <input type="date" id="b_date">
+                        <div class="error-message" id="b_date-error"></div>
                     </div>
 
                     <div class="form-group form-group-line">
@@ -445,20 +296,21 @@
                         <div class="radio-group">
                             <label for="male">
                                 <span>Male</span>
-                                <input type="radio" id="male" name="sex" value="male">
+                                <input type="radio" id="male" name="gender" value="Male">
                             </label>
                             <label for="female">
                                 <span>Female</span>
-                                <input type="radio" id="female" name="sex" value="female">
+                                <input type="radio" id="female" name="gender" value="Female">
                             </label>
                         </div>
+                        <div class="error-message" id="gender-error"></div>
                     </div>
 
                     <div class="form-group form-group-line">
-                        <label for="background-color">Background Color</label>
+                        <label for="bg_color">Background Color</label>
                         <div>
                             <img class="color-picker-logo" alt="Color picker" src="./images/color_picker.png">
-                            <input type="color" id="background-color">
+                            <input type="color" id="bg_color">
                         </div>
                     </div>
                 </div>
@@ -466,6 +318,7 @@
                 <div class="form-group">
                     <label for="notes">Notes (optional)</label>
                     <textarea id="notes"></textarea>
+                    <div class="error-message" id="notes-error"></div>
                 </div>
 
                 <div class="form-group">
@@ -484,28 +337,24 @@
             <span class="close-btn">&times;</span>
         </div>
         <div class="popup-body teacher-info-popup-body">
-            <img src="./images/ihor_tkachuk.jpg" alt="Ihor Tkachuk" class="teacher-photo">
+            <img src="" alt="" class="teacher-photo">
             <div class="teacher-info">
                 <div class="teacher-info-header">
-                    <h3>Ihor Tkachuk</h3>
-                    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd"
-                         clip-rule="evenodd">
-                        <path d="M15.668 8.626l8.332 1.159-6.065 5.874 1.48 8.341-7.416-3.997-7.416 3.997 1.481-8.341-6.064-5.874 8.331-1.159 3.668-7.626 3.669 7.626zm-6.67.925l-6.818.948 4.963 4.807-1.212 6.825 6.068-3.271 6.069 3.271-1.212-6.826 4.964-4.806-6.819-.948-3.002-6.241-3.001 6.241z"/>
+                    <h3 id="popup-teacher-name"></h3>
+                    <svg id="popup-teacher-star" width="24" height="24" viewBox="0 0 200 192" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M199.755 73.1182C199.39 71.9962 198.074 69.3912 193.758 69.3912H126.252L105.395 5.18626C104.058 1.08103 101.169 0.638268 99.9914 0.638268C98.8093 0.638268 95.9163 1.08103 94.5966 5.18626L73.7308 69.3912H6.22878C1.78825 69.3912 0.524439 72.2455 0.249324 73.0924C-0.0429857 73.9693 -0.726474 77.03 2.88441 79.6607L57.5033 119.342L36.6333 183.564C35.7306 186.401 36.4656 188.25 37.2308 189.281C38.9503 191.658 42.5783 191.946 45.3768 189.892L99.9957 150.215L154.602 189.887C155.952 190.872 157.271 191.362 158.638 191.362C160.302 191.362 161.798 190.605 162.769 189.285C163.534 188.228 164.257 186.367 163.35 183.551L142.484 119.342L197.12 79.6564C200.58 77.1245 200.116 74.2444 199.755 73.1182ZM134.591 114.003C133.027 115.142 132.36 117.137 132.954 119.015L151.696 176.703L102.605 141.037C101.088 139.954 98.9167 139.941 97.3563 141.05L48.287 176.708L67.0335 119.006C67.631 117.162 66.9776 115.155 65.4086 114.007L16.3307 78.354H76.9892C78.9451 78.354 80.6603 77.1073 81.2449 75.2546L99.9871 17.5707L118.734 75.2675C119.348 77.1159 121.059 78.354 122.998 78.354H183.648L134.591 114.003Z"
+                              fill="FFD700"/>
                     </svg>
                 </div>
-                <p class="teacher-specialization"><strong>Chemistry</strong></p>
-                <p class="teacher-info-text">Kyiv, Ukraine</p>
-                <p class="teacher-info-text">35, Male</p>
-                <p class="teacher-info-text"><a href="mailto:ihor_tkachuk@domain.com">ihor_tkachuk@domain.com</a></p>
-                <p class="teacher-info-text">+380964993252</p>
+                <p class="teacher-specialization"><strong id="popup-teacher-specialization"></strong></p>
+                <p class="teacher-info-text" id="popup-teacher-location"></p>
+                <p class="teacher-info-text" id="popup-teacher-gender-age"></p>
+                <p class="teacher-info-text"><a href="#" id="popup-teacher-email"></a></p>
+                <p class="teacher-info-text" id="popup-teacher-phone"></p>
             </div>
             <div class="popup-footer">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab autem consectetur culpa cumque,
-                    distinctio
-                    dolor dolore dolorem doloremque ea explicabo facilis nam nesciunt nisi pariatur perspiciatis porro
-                    quis
-                    similique temporibus veniam veritatis? A ab ad, aliquam amet consequatur cupiditate debitis deserunt
-                    doloribus dolorum earum eius eos minus nostrum odit omnis perferendis...</p>
+                <p id="popup-teacher-notes">.</p>
                 <a href="#" class="toggle-map">toggle map</a>
             </div>
         </div>
@@ -513,7 +362,7 @@
 </div>
 
 
-<script type="text/javascript" src="../build/app.js"></script>
+<script type="module" src="./js/app.js"></script>
 
 </body>
 </html>

@@ -171,8 +171,6 @@ textarea {
 }
 
 .teacher-info {
-  float: left;
-  width: calc(100% - 330px);
   text-align: left;
 }
 .teacher-info h3 {
@@ -432,6 +430,7 @@ nav a:hover {
 }
 .teacher-card .teacher-info {
   margin-top: 15px;
+  text-align: center;
 }
 .teacher-card .teacher-info h2 {
   font-size: 1.5em;
