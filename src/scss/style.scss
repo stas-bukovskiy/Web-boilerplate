@@ -467,3 +467,14 @@ footer nav {
 .bold-text {
   font-weight: bold;
 }
+
+.error-message {
+  color: $primary-color;
+  font-size: 0.9em;
+  display: none;
+  margin-top: 5px;
+}
+
+#region-filter {
+  width: 100px;
+}

@@ -634,4 +634,15 @@ footer nav {
   font-weight: bold;
 }
 
+.error-message {
+  color: #f75c49;
+  font-size: 0.9em;
+  display: none;
+  margin-top: 5px;
+}
+
+#region-filter {
+  width: 100px;
+}
+
 /*# sourceMappingURL=style.css.map */
