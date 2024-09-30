@@ -1,14 +1,19 @@
 import '../css/app.css';
 import {
     Courses,
-    Teacher,
-    normalizedTeachers,
     FilterParams,
     filterTeachers,
-    validateTeacher,
+    normalizeTeachers,
     SortParams,
-    sortTeachers
+    sortTeachers,
+    Teacher,
+    validateTeacher,
 } from './teachers';
+
+const serverBaseUrl = 'http://localhost:8080';
+
+let teachers: Teacher[] = [];
+let filteredTeachers: Teacher[] = [];
 
 function openPopup(popupId: string): void {
     const popup = document.getElementById(popupId);
@@ -53,7 +58,6 @@ function getTeacherProfilePhotoHTML(teacher: Teacher): string {
         `<div class="profile-photo initials ${starredClass}"><span>${getInitials(teacher)}</span></div>`
 }
 
-// Task 1
 function createTeacherCard(teacher: Teacher): string {
     const profilePhotoHTML = getTeacherProfilePhotoHTML(teacher);
     let firstAndLastName = teacher.full_name.split(' ')
@@ -71,7 +75,7 @@ function createTeacherCard(teacher: Teacher): string {
 }
 
 function addTeacherClickEvent(): void {
-    normalizedTeachers.map((teacher) => {
+    teachers.map((teacher) => {
         const teacherCard = document.getElementById(teacher.id);
         if (teacherCard) {
             teacherCard.addEventListener('click', () => {
@@ -123,8 +127,8 @@ function showTeacherPopup(teacher: Teacher): void {
                 teacher.favorite = !teacher.favorite;
 
                 newStar?.getElementsByTagName("path")[0].setAttribute("d", getStarSVGCode(teacher.favorite));
-                renderTeachers(normalizedTeachers);
-                renderFavoriteTeachers(normalizedTeachers);
+                renderTeachers(teachers);
+                renderFavoriteTeachers(teachers);
             });
         }
 
@@ -168,14 +172,10 @@ function showTeacherPopup(teacher: Teacher): void {
     }
 }
 
-renderTeachers(normalizedTeachers);
-
-
 // Paginated table of teacher statistics
 const itemsPerPage = 10;
 let currentPage = 1;
 
-const totalPages = Math.ceil(normalizedTeachers.length / itemsPerPage);
 
 function renderTable(teachers: Teacher[], page: number) {
     const startIndex = (page - 1) * itemsPerPage;
@@ -197,19 +197,27 @@ function renderTable(teachers: Teacher[], page: number) {
     }
 }
 
-function renderPagination() {
+function renderPagination(teachers: Teacher[]) {
     const paginationPanel = document.getElementById('pagination-panel') as HTMLElement;
     paginationPanel.innerHTML = '';
+
+    const totalPages = Math.ceil(teachers.length / itemsPerPage);
+    if (currentPage > totalPages) {
+        currentPage = 1;
+    }
 
     for (let i = 1; i <= totalPages; i++) {
         const activeClass = i === currentPage ? 'active' : '';
         paginationPanel.innerHTML += `<a href="#" class="page-link ${activeClass}" data-page="${i}">${i}</a>`;
+        console.log(i);
     }
 
     if (currentPage < totalPages) {
         paginationPanel.innerHTML += `<a href="#" class="page-link" data-page="${totalPages}">Last</a>`;
     }
+}
 
+function addPaginationListeners() {
     document.getElementById('pagination-panel')?.addEventListener('click', (e) => {
         e.preventDefault()
         const target = e.target as HTMLElement;
@@ -218,16 +226,20 @@ function renderPagination() {
             const selectedPage = parseInt(target.getAttribute('data-page') as string, 10);
             if (!isNaN(selectedPage)) {
                 currentPage = selectedPage;
-                renderTable(normalizedTeachers, currentPage);
-                renderPagination();
+                renderStatistics();
             }
         }
     });
 }
 
+renderStatistics();
+renderPagination(filteredTeachers);
+addPaginationListeners();
 
-renderTable(normalizedTeachers, currentPage);
-renderPagination();
+function renderStatistics() {
+    renderPagination(filteredTeachers);
+    renderTable(filteredTeachers, currentPage);
+}
 
 
 // Favorite teachers
@@ -239,10 +251,9 @@ function renderFavoriteTeachers(teachers: Teacher[]): void {
     }
 }
 
-renderFavoriteTeachers(normalizedTeachers);
+renderFavoriteTeachers(teachers);
 
 
-// Task 2
 function populateRegionFilter(teachers: Teacher[]): void {
     const regionFilter = document.querySelector('#region-filter') as HTMLSelectElement;
 
@@ -262,7 +273,7 @@ function populateRegionFilter(teachers: Teacher[]): void {
     });
 }
 
-populateRegionFilter(normalizedTeachers);
+populateRegionFilter(teachers);
 
 function applyFilters(teachers: Teacher[]): Teacher[] {
     const ageFilter = (document.querySelector('#age-filter') as HTMLSelectElement).value;
@@ -320,8 +331,8 @@ function applyFilters(teachers: Teacher[]): Teacher[] {
 }
 
 function updateTeacherList() {
-    const filteredTeachers = applyFilters(normalizedTeachers);
-    renderTeachers(filteredTeachers);
+    filteredTeachers = applyFilters(teachers);
+    setFilteredTeachers(filteredTeachers);
 }
 
 function setupFilterListeners() {
@@ -332,14 +343,13 @@ function setupFilterListeners() {
 
 setupFilterListeners();
 
-// Task 3
 let currentSortParams: SortParams | undefined;
 
-function handleSortClick(field: 'full_name' | 'course' | 'age' | 'gender'|'country') {
+function handleSortClick(field: 'full_name' | 'course' | 'age' | 'gender' | 'country') {
     if (currentSortParams) {
         if (currentSortParams.order === 'desc') {
             currentSortParams = undefined;
-            renderTable(normalizedTeachers, currentPage);
+            renderTable(teachers, currentPage);
             return
         }
 
@@ -348,27 +358,29 @@ function handleSortClick(field: 'full_name' | 'course' | 'age' | 'gender'|'count
         currentSortParams = {field, order: 'asc'};
     }
 
-    const sortedTeachers = sortTeachers(normalizedTeachers, currentSortParams);
+    const sortedTeachers = sortTeachers(filteredTeachers, currentSortParams);
     renderTable(sortedTeachers, currentPage);
 }
 
-// Event listener for table headers
-document.addEventListener('DOMContentLoaded', () => {
-    const headers = document.querySelectorAll('.statistics-table th');
+function setupSortListeners() {
+    document.addEventListener('DOMContentLoaded', () => {
+        const headers = document.querySelectorAll('.statistics-table th');
 
-    headers.forEach(header => {
-        const field = header.getAttribute('data-field') as 'full_name' | 'course' | 'age' | 'gender'|'country';
+        headers.forEach(header => {
+            const field = header.getAttribute('data-field') as 'full_name' | 'course' | 'age' | 'gender' | 'country';
 
-        if (field) {
-            header.addEventListener('click', () => handleSortClick(field));
-        }
+            if (field) {
+                header.addEventListener('click', () => handleSortClick(field));
+            }
+        });
+
+        renderTable(teachers, currentPage);
     });
+}
 
-    renderTable(normalizedTeachers, currentPage);
-});
+setupSortListeners();
 
 
-// Task 4
 function populateCourses() {
     const selectElement = document.getElementById('course') as HTMLSelectElement;
 
@@ -397,7 +409,7 @@ function addTeacher() {
     }
     const teacher: Teacher = {
         favorite: false,
-        id: `teacher-${normalizedTeachers.length + 1}`,
+        id: `teacher-${teachers.length + 1}`,
         title: "",
         full_name: (document.getElementById('full_name') as HTMLInputElement).value,
         course: (document.getElementById('course') as HTMLSelectElement).value,
@@ -420,11 +432,16 @@ function addTeacher() {
         return;
     }
 
-    normalizedTeachers.push(teacher);
+    createTeacher(teacher)
+        .then(() => {
+            teachers.push(teacher);
+            setTeachers(teachers);
+        })
+        .catch((error) => console.error('Create user error:', error));
 
     (document.querySelector('.teacher-form') as HTMLFormElement).reset();
     closePopup();
-    renderTeachers(normalizedTeachers);
+    renderTeachers(teachers);
 }
 
 function displayError(field: string, error: string) {
@@ -458,3 +475,74 @@ document.querySelector('.teacher-form')?.addEventListener('submit', (e) => {
     e.preventDefault();
     addTeacher();
 });
+
+async function createTeacher(teacher: Teacher): Promise<Teacher> {
+    const response = await fetch(serverBaseUrl + '/teachers', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(teacher)
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to create teacher: ${response.statusText}`);
+    }
+
+    return response.json();
+}
+
+
+function setTeachers(newTeachers: Teacher[]) {
+    teachers = newTeachers;
+    filteredTeachers = teachers;
+
+    renderTeachers(teachers);
+    renderFavoriteTeachers(teachers);
+    renderStatistics();
+}
+
+function addTeachers(newTeachers: Teacher[]) {
+    teachers.push(...newTeachers);
+    setTeachers(teachers);
+}
+
+function setFilteredTeachers(newTeachers: Teacher[]) {
+    filteredTeachers = newTeachers;
+    renderTeachers(filteredTeachers);
+    renderStatistics();
+}
+
+
+// Task 1
+async function fetchUsers(userCount: number = 50): Promise<Teacher[]> {
+    const response = await fetch(`https://randomuser.me/api/?results=${userCount}`);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const users = data.results;
+    return normalizeTeachers(users);
+}
+
+async function fetchTeachers(): Promise<Teacher[]> {
+    const response = await fetch(serverBaseUrl + '/teachers');
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch teachers: ${response.statusText}`);
+    }
+
+    return await response.json();
+}
+
+// fetch from randomuser.me
+fetchUsers(50)
+    .then(addTeachers)
+    .catch(ex => console.error("Console error", ex));
+
+// fetch from local server
+fetchTeachers()
+    .then(addTeachers)
+    .catch(ex => console.error("Console error", ex));
+
