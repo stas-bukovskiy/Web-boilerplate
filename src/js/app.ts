@@ -1,4 +1,11 @@
 import '../css/app.css';
+
+import * as L from "leaflet";
+import 'leaflet/dist/leaflet.css';
+
+// @ts-ignore
+import * as dayjs from 'dayjs'
+
 import {
     Courses,
     FilterParams,
@@ -8,6 +15,7 @@ import {
     sortTeachers,
     Teacher,
     validateTeacher,
+    Coordinates
 } from './teachers';
 
 const serverBaseUrl = 'http://localhost:8080';
@@ -167,6 +175,10 @@ function showTeacherPopup(teacher: Teacher): void {
         if (notesElement) {
             notesElement.textContent = teacher.notes || '';
         }
+
+        displayTeacherMap(teacher.coordinates);
+
+        updateTeacherPopup(teacher);
 
         openPopup('teacher-info-popup');
     }
@@ -546,3 +558,75 @@ fetchTeachers()
     .then(addTeachers)
     .catch(ex => console.error("Console error", ex));
 
+
+// Lab 5
+
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon-2x.png',
+    iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
+});
+
+
+const defaultCoordinates: Coordinates = {
+    latitude: "50.450001",
+    longitude: "30.523333"
+};
+
+let map: L.Map | null = null;
+
+function displayTeacherMap(coordinates?: Coordinates) {
+    const {latitude, longitude} = coordinates || defaultCoordinates;
+
+
+    if (map !== null) {
+        map.remove();
+    }
+
+    const lat = parseFloat(latitude);
+    const lng = parseFloat(longitude);
+
+    map = L.map('teacher-map').setView([lat, lng], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    L.marker([lat, lng]).addTo(map)
+        .bindPopup('Teacher Location')
+        .openPopup();
+
+    setTimeout(() => {
+        // @ts-ignore
+        map.invalidateSize();
+    }, 0);
+}
+
+
+
+function calculateDaysToBirthday(birthDate: string): number {
+    const today = dayjs();
+    const birthdayThisYear = dayjs(birthDate).year(today.year());
+
+    if (birthdayThisYear.isBefore(today)) {
+        return dayjs(birthDate).year(today.year() + 1).diff(today, 'day');
+    } else {
+        return birthdayThisYear.diff(today, 'day');
+    }
+}
+
+function updateTeacherPopup(teacher: Teacher) {
+    const teacherPopupName = document.getElementById("popup-teacher-name");
+    const teacherPopupBirthday = document.getElementById("popup-teacher-birthday");
+
+    if (teacherPopupName) {
+        teacherPopupName.textContent = teacher.full_name;
+    }
+
+    if (teacher.b_date && teacherPopupBirthday) {
+        const daysToBirthday = calculateDaysToBirthday(teacher.b_date);
+        teacherPopupBirthday.innerHTML = `<b>${daysToBirthday}</b> days until birthday!`;
+    } else if (teacherPopupBirthday) {
+        teacherPopupBirthday.innerHTML = "";
+    }
+}
