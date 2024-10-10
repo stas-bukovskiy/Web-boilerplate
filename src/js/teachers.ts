@@ -40,7 +40,7 @@ export type Teacher = {
 
 // Task 1: Normalize teachers
 
-function normalizeTeachers(...sources: any[][]): Teacher[] {
+export function normalizeTeachers(...sources: any[][]): Teacher[] {
     const normalize = (user: any): Teacher => {
         const fullName = user.full_name || `${user?.name?.first || ''} ${user?.name?.last || ''}`;
         const bDate = user.b_day || user?.dob?.date;

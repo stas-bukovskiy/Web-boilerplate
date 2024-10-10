@@ -4,6 +4,7 @@
   "main": "./src/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --open --inline",
+    "start:json-server": "json-server --watch db.json --port 8080",
     "build": "rm -f build && cross-env NODE_ENV=production webpack --progress",
     "lint": "eslint src/js",
     "stylelint": "stylelint src/css"
@@ -42,6 +43,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "json-server": "^1.0.0-beta.3",
     "libphonenumber-js": "^1.11.9"
   }
 }

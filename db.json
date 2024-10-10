@@ -1,0 +1,20 @@
+{
+  "teachers": [
+    {
+      "id": "teacher-51",
+      "favorite": false,
+      "title": "",
+      "full_name": "Stas Bukovskyi",
+      "course": "Physics",
+      "age": 19,
+      "email": "stas.bukovskyi@gmail.com",
+      "phone": "+38 098 171 48 20",
+      "country": "Ukraine",
+      "city": "Kolomyia",
+      "gender": "Female",
+      "b_date": "2004-12-08",
+      "notes": "",
+      "bg_color": "#000000"
+    }
+  ]
+}
